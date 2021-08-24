@@ -27,33 +27,18 @@
           </div>
           <!-- form -->
           <b-form @submit.prevent="register">
-            <!-- first name-->
-            <b-form-group label-for="input-first_name">
+            <!-- username-->
+            <b-form-group label-for="input-username">
               <template #label>
-                First Name
+                Username
               </template>
               <b-form-input
-                id="input-first_name"
+                id="input-username"
                 type="text"
-                placeholder="Enter First Name"
+                placeholder="Enter username"
               />
               <b-form-invalid-feedback
-                id="input-first_name-feedback"
-              />
-            </b-form-group>
-
-            <!-- last name-->
-            <b-form-group label-for="input-last_name">
-              <template #label>
-                Last Name
-              </template>
-              <b-form-input
-                id="input-last_name"
-                type="text"
-                placeholder="Enter Last Name"
-              />
-              <b-form-invalid-feedback
-                id="input-last_name-feedback"
+                id="input-username-feedback"
               />
             </b-form-group>
 
