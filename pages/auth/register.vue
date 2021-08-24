@@ -1,6 +1,5 @@
 <template>
-  <!-- Login form -->
-
+  <!-- Register  form -->
   <div class="row justify-content-center">
     <div class="col-md-8 col-lg-6 col-xl-5 mt-5">
       <div class="card">
@@ -23,22 +22,53 @@
               </div>
             </div>
             <p class="text-muted mb-4 mt-3">
-              Enter your email address and password to access admin panel.
+              Don't have an account? Create your own account, it takes less than a minute
             </p>
           </div>
-
           <!-- form -->
-          <b-form @submit.prevent="login">
-            <!-- email -->
+          <b-form @submit.prevent="register">
+            <!-- first name-->
+            <b-form-group label-for="input-first_name">
+              <template #label>
+                First Name
+              </template>
+              <b-form-input
+                id="input-first_name"
+                type="text"
+                placeholder="Enter First Name"
+              />
+              <b-form-invalid-feedback
+                id="input-first_name-feedback"
+              />
+            </b-form-group>
 
+            <!-- last name-->
+            <b-form-group label-for="input-last_name">
+              <template #label>
+                Last Name
+              </template>
+              <b-form-input
+                id="input-last_name"
+                type="text"
+                placeholder="Enter Last Name"
+              />
+              <b-form-invalid-feedback
+                id="input-last_name-feedback"
+              />
+            </b-form-group>
+
+            <!-- email address-->
             <b-form-group label-for="input-email">
               <template #label>
                 Email
               </template>
               <b-form-input
                 id="input-email"
-                type="text"
+                type="email"
                 placeholder="Enter Email"
+              />
+              <b-form-invalid-feedback
+                id="input-email-feedback"
               />
             </b-form-group>
 
@@ -52,39 +82,68 @@
                 type="password"
                 placeholder="Enter password"
               />
+              <b-form-invalid-feedback
+                id="input-password-feedback"
+              />
+            </b-form-group>
+
+            <!-- Comfirm password -->
+            <b-form-group label-for="password_confirmation">
+              <template #label>
+                Confirmed password <span class="text-danger">*</span>
+              </template>
+              <b-form-input
+                id="password_confirmation"
+                type="password"
+                placeholder="Enter password confirmation"
+                required
+              />
+              <b-form-invalid-feedback
+                id="password_confirmation-feedback"
+              />
             </b-form-group>
 
             <!-- checkbox  -->
-
             <div class="form-group mb-3">
               <div class="custom-control custom-checkbox">
+                <input
+                  id="checkbox-login"
+                  type="checkbox"
+                  class="custom-control-input"
+                  checked
+                >
                 <label
                   class="custom-control-label"
                   for="checkbox-login"
-                >Remember me</label>
+                >I accept Terms and Conditions</label>
               </div>
             </div>
 
             <!-- login button -->
-
             <div class="form-group mb-0 text-center">
               <button
                 class="btn btn-primary btn-block"
                 type="submit"
               >
-                Log In
+                Sign Up
               </button>
             </div>
 
             <!-- social media -->
-
             <div class="text-center">
               <ul class="social-list list-inline mt-3 mb-0">
                 <li class="list-inline-item">
                   <a
                     href="javascript: void(0);"
+                    class="social-list-item border-purple text-purple"
+                  >
+                    <i class="mdi mdi-facebook" />
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a
+                    href="javascript: void(0);"
                     class="social-list-item border-danger text-danger"
-                    @click="openPopup(socialiteLinks.google)"
                   >
                     <i class="mdi mdi-google" />
                   </a>
@@ -92,10 +151,9 @@
                 <li class="list-inline-item">
                   <a
                     href="javascript: void(0);"
-                    class="social-list-item border-purple text-purple"
-                    @click="openPopup(socialiteLinks.facebook)"
+                    class="social-list-item border-info text-info"
                   >
-                    <i class="mdi mdi-facebook" />
+                    <i class="mdi mdi-twitter" />
                   </a>
                 </li>
               </ul>
@@ -104,25 +162,16 @@
         </div>
       </div>
 
-      <!-- forgot password & sign up  -->
-
+      <!-- sign in  -->
       <div class="row mt-3">
         <div class="col-12 text-center">
-          <p>
-            <nuxt-link
-              to="/auth/forgot-password"
-              class="text-muted ml-1"
-            >
-              Forgot your password?
-            </nuxt-link>
-          </p>
           <p class="text-muted">
-            Don't have an account?
+            Already have account?
             <nuxt-link
-              to="/auth/register"
+              to="/"
               class="text-primary font-weight-medium ml-1"
             >
-              Sign Up
+              Sign In
             </nuxt-link>
           </p>
         </div>
@@ -130,7 +179,3 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {}
-</script>
