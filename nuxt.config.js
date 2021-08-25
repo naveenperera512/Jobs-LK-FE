@@ -40,6 +40,19 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/auth-next'
   ],
+  auth: {
+    strategies: {
+      laravelSanctum: {
+        provider: 'laravel/sanctum',
+        url: 'http://localhost:8000'
+      }
+    }
+  },
+
+  axios: {
+    baseURL: 'http://localhost:8000',
+    credentials: true
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
