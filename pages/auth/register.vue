@@ -1,166 +1,192 @@
 <template>
-  <!-- Register  form -->
-  <div class="row justify-content-center">
-    <div class="col-md-8 col-lg-6 col-xl-5 mt-5">
-      <div class="card">
-        <div class="card-body p-4">
-          <div class="text-center w-75 m-auto">
-            <div class="auth-logo">
-              <div class="logo logo-dark text-center">
-                <!-- <span class="logo-lg">
-                  <img
-                    src=""
-                    width="50"
-                  >
-                </span>
-                <span class="logo-lg mt-2">
-                  <img
-                    src=""
-                    width="200"
-                  >
-                </span> -->
-              </div>
-            </div>
-            <p class="text-muted mb-4 mt-3">
-              Don't have an account? Create your own account, it takes less than a minute
-            </p>
-          </div>
-          <!-- form -->
-          <b-form @submit.prevent="register">
-            <!-- username-->
-            <b-form-group label-for="input-username">
-              <template #label>
-                Username
-              </template>
-              <b-form-input
-                id="input-username"
-                type="text"
-                placeholder="Enter username"
-              />
-              <b-form-invalid-feedback
-                id="input-username-feedback"
-              />
-            </b-form-group>
-
-            <!-- email address-->
-            <b-form-group label-for="input-email">
-              <template #label>
-                Email
-              </template>
-              <b-form-input
-                id="input-email"
-                type="email"
-                placeholder="Enter Email"
-              />
-              <b-form-invalid-feedback
-                id="input-email-feedback"
-              />
-            </b-form-group>
-
-            <!-- password -->
-            <b-form-group label-for="input-password">
-              <template #label>
-                Password
-              </template>
-              <b-form-input
-                id="input-password"
-                type="password"
-                placeholder="Enter password"
-              />
-              <b-form-invalid-feedback
-                id="input-password-feedback"
-              />
-            </b-form-group>
-
-            <!-- Comfirm password -->
-            <b-form-group label-for="password_confirmation">
-              <template #label>
-                Confirmed password <span class="text-danger">*</span>
-              </template>
-              <b-form-input
-                id="password_confirmation"
-                type="password"
-                placeholder="Enter password confirmation"
-                required
-              />
-              <b-form-invalid-feedback
-                id="password_confirmation-feedback"
-              />
-            </b-form-group>
-
-            <!-- checkbox  -->
-            <div class="form-group mb-3">
-              <div class="custom-control custom-checkbox">
-                <input
-                  id="checkbox-login"
-                  type="checkbox"
-                  class="custom-control-input"
-                  checked
-                >
-                <label
-                  class="custom-control-label"
-                  for="checkbox-login"
-                >I accept Terms and Conditions</label>
-              </div>
-            </div>
-
-            <!-- login button -->
-            <div class="form-group mb-0 text-center">
-              <button
-                class="btn btn-primary btn-block"
-                type="submit"
-              >
-                Sign Up
-              </button>
-            </div>
-
-            <!-- social media -->
-            <div class="text-center">
-              <ul class="social-list list-inline mt-3 mb-0">
-                <li class="list-inline-item">
-                  <a
-                    href="javascript: void(0);"
-                    class="social-list-item border-purple text-purple"
-                  >
-                    <i class="mdi mdi-facebook" />
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a
-                    href="javascript: void(0);"
-                    class="social-list-item border-danger text-danger"
-                  >
-                    <i class="mdi mdi-google" />
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a
-                    href="javascript: void(0);"
-                    class="social-list-item border-info text-info"
-                  >
-                    <i class="mdi mdi-twitter" />
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </b-form>
-        </div>
-      </div>
-
-      <!-- sign in  -->
-      <div class="row mt-3">
-        <div class="col-12 text-center">
-          <p class="text-muted">
-            Already have account?
-            <nuxt-link
-              to="/"
-              class="text-primary font-weight-medium ml-1"
+  <div>
+    <b-container
+      fluid
+      class="mt-5"
+    >
+      <b-row>
+        <b-col
+          md="4"
+        />
+        <b-col
+          md="4"
+          class="mt-5"
+        >
+          <div
+            class="mb-2 mt-5 d-flex justify-content-center"
+            width="30pt"
+            height="30pt"
+          >
+            <img
+              src="~/assets/images/logo.png"
             >
-              Sign In
+          </div>
+          <b-card>
+            <!-- form -->
+
+            <b-form
+              @submit.prevent="register"
+            >
+              <!-- name -->
+              <b-form-group label-for="name">
+                <template #label>
+                  Name <span class="text-danger">*</span>
+                </template>
+                <b-form-input
+                  id="name"
+                  v-model="form.name"
+                  type="text"
+                  :state="errors && errors.name ? false : null"
+                  placeholder="Enter name"
+                  required
+                />
+                <b-form-invalid-feedback
+                  v-if="errors && errors.name"
+                  id="name-feedback"
+                >
+                  {{ errors.name[0] }}
+                </b-form-invalid-feedback>
+              </b-form-group>
+
+              <!-- email -->
+              <b-form-group label-for="email">
+                <template #label>
+                  Email <span class="text-danger">*</span>
+                </template>
+                <b-form-input
+                  id="email"
+                  v-model="form.email"
+                  type="text"
+                  :state="errors && errors.email ? false : null"
+                  placeholder="Enter email"
+                  required
+                />
+                <b-form-invalid-feedback
+                  v-if="errors && errors.email"
+                  id="email-feedback"
+                >
+                  {{ errors.email[0] }}
+                </b-form-invalid-feedback>
+              </b-form-group>
+
+              <!-- password -->
+              <b-form-group label-for="password">
+                <template #label>
+                  Password <span class="text-danger">*</span>
+                </template>
+                <b-form-input
+                  id="password"
+                  v-model="form.password"
+                  type="password"
+                  :state="errors && errors.password ? false : null"
+                  placeholder="Enter password"
+                  required
+                />
+                <b-form-invalid-feedback
+                  v-if="errors && errors.password"
+                  id="password-feedback"
+                >
+                  {{ errors.password[0] }}
+                </b-form-invalid-feedback>
+              </b-form-group>
+
+              <!-- Comfirm password -->
+              <b-form-group label-for="password_confirmation">
+                <template #label>
+                  Confirmed password <span class="text-danger">*</span>
+                </template>
+                <b-form-input
+                  id="password_confirmation"
+                  v-model="form.password_confirmation"
+                  type="password"
+                  :state="errors && errors.name ? false : null"
+                  placeholder="Enter password confirmation"
+                  required
+                />
+                <b-form-invalid-feedback
+                  v-if="errors && errors.password_confirmation"
+                  id="password_confirmation-feedback"
+                >
+                  {{ errors.password_confirmation[0] }}
+                </b-form-invalid-feedback>
+              </b-form-group>
+
+              <!-- check box -->
+              <b-form-checkbox
+                id="checkbox-2"
+                name="checkbox-2"
+                value="true"
+                unchecked-value="false"
+              >
+                I agree to the...
+              </b-form-checkbox>
+
+              <!-- button-->
+              <div
+                class="d-flex justify-content-end"
+              >
+                <b-button
+                  type="submit"
+                  variant="primary"
+                  class="mt-n2 ml-2"
+                >
+                  Register
+                </b-button>
+              </div>
+            </b-form>
+          </b-card>
+
+          <!--footer-->
+          <div
+            class="d-flex justify-content-center mt-3"
+          >
+            Already have an account?
+            <nuxt-link
+              :to="{ path: '/auth/login'}"
+              class="px-1 "
+            >
+              <u>Sign in</u>
             </nuxt-link>
-          </p>
-        </div>
-      </div>
-    </div>
+          </div>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      errors: {},
+      form: {
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
+      }
+    }
+  },
+  methods: {
+    async register () {
+      try {
+        await this.$axios.get('sanctum/csrf-cookie')
+        await this.$axios.post('register', this.form)
+
+        await this.$auth.loginWith('laravelSanctum', {
+          data: { email: this.form.email, password: this.form.password }
+        })
+        await this.$router.replace({ path: '/auth/login' })
+      } catch (error) {
+        if (error.response.status === 422) {
+          this.errors = error.response.data.errors
+        }
+      }
+    }
+  }
+}
+</script>
+
+<style>
+
+</style>
