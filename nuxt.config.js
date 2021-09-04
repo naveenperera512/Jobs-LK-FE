@@ -1,4 +1,12 @@
 export default {
+  router: {
+    extendRoutes (routes) {
+      routes.push({
+        path: '/',
+        component: '~/pages/test/index.vue'
+      })
+    }
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Jobs-LK-FE',

@@ -83,6 +83,11 @@
 
 <script>
 export default {
+  asyncData ({ $auth, redirect }) {
+    if (!$auth.loggedIn) {
+      redirect('/')
+    }
+  },
   data () {
     return {
       errors: {},

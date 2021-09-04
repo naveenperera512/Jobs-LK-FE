@@ -1,118 +1,111 @@
 <template>
-  <div>
-    <b-container
-      fluid
-      class="mt-5"
-    >
-      <b-row>
-        <b-col
-          md="4"
-        />
-        <b-col
-          md="4"
-          class="mt-5"
-        >
-          <div
-            class="mb-2 mt-5 d-flex justify-content-center"
-            width="30pt"
-            height="30pt"
-          >
-            <img
-              src="~/assets/images/logo.png"
-            >
-          </div>
-          <b-card>
-            <!-- form -->
-            <b-form @submit.prevent="login">
-              <!-- email -->
-              <b-form-group label-for="input-email">
-                <template #label>
-                  Email
-                </template>
-                <b-form-input
-                  id="input-email"
-                  v-model="form.email"
-                  type="text"
-                  :state="errors && errors.email ? false : null"
-                  placeholder="Enter Email"
-                />
-                <b-form-invalid-feedback
-                  v-if="errors && errors.email"
-                  id="input-email-feedback"
-                >
-                  {{ errors.email[0] }}
-                </b-form-invalid-feedback>
-              </b-form-group>
-
-              <!-- password -->
-              <b-form-group label-for="input-password">
-                <template #label>
-                  Password
-                </template>
-                <b-form-input
-                  id="input-password"
-                  v-model="form.password"
-                  type="password"
-                  :state="errors && errors.password ? false : null"
-                  placeholder="Enter password"
-                />
-                <b-form-invalid-feedback
-                  v-if="errors && errors.password"
-                  id="input-password-feedback"
-                >
-                  {{ errors.password[0] }}
-                </b-form-invalid-feedback>
-              </b-form-group>
-
-              <!-- check box -->
-              <b-form-checkbox
-                id="checkbox-1"
-                name="checkbox-1"
-                value="true"
-                unchecked-value="false"
-              >
-                Remember Me
-              </b-form-checkbox>
-
-              <!-- link & button-->
-              <div
-                class="d-flex justify-content-end"
-              >
-                <nuxt-link
-                  :to="{ path: '/auth/forgot-password'}"
-                >
-                  Forgot Your Password?
-                </nuxt-link>
-                <b-button
-                  type="submit"
-                  variant="primary"
-                  class="mt-n2 ml-2"
-                >
-                  Login
-                </b-button>
+  <!-- Login form -->
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-8 col-lg-6 col-xl-4 mt-5">
+      <div class="card">
+        <div class="card-body p-4">
+          <div class="text-center w-75 m-auto">
+            <div class="auth-logo">
+              <div class="logo logo-dark text-center">
+                <div class="logo-lg mt-5 ">
+                  <img src="~/assets/images/favicon.png" width="50">
+                </div>
+                <div class="logo-lg mt-4">
+                  <img src="~/assets/images/logo-new.png" width="200">
+                </div>
               </div>
-            </b-form>
-          </b-card>
-
-          <!--footer-->
-          <div class="d-flex justify-content-center mt-3">
-            Don’t have an account?
-            <nuxt-link
-              :to="{ path: '/auth/register'}"
-              class="px-1 "
-            >
-              <u>Sign up</u>
-            </nuxt-link>
+            </div>
+            <p class="text-muted mb-4 mt-3">
+              Enter your email address and password to login.
+            </p>
           </div>
-        </b-col>
-      </b-row>
-    </b-container>
+          <!-- form -->
+          <b-form class="mb-4" @submit.prevent="login">
+            <!-- email -->
+            <b-form-group label-for="input-email">
+              <template #label>
+                Email
+              </template>
+              <b-form-input
+                id="input-email"
+                v-model="form.email"
+                type="text"
+                :state="errors && errors.email ? false : null"
+                placeholder="Enter Email"
+              />
+              <b-form-invalid-feedback
+                v-if="errors && errors.email"
+                id="input-email-feedback"
+              >
+                {{ errors.email[0] }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+
+            <!-- password -->
+            <b-form-group label-for="input-password">
+              <template #label>
+                Password
+              </template>
+              <b-form-input
+                id="input-password"
+                v-model="form.password"
+                type="password"
+                :state="errors && errors.password ? false : null"
+                placeholder="Enter password"
+              />
+              <b-form-invalid-feedback
+                v-if="errors && errors.password"
+                id="input-password-feedback"
+              >
+                {{ errors.password[0] }}
+              </b-form-invalid-feedback>
+            </b-form-group>
+
+            <!-- checkbox  -->
+            <div class="form-group mb-3">
+              <div class="custom-control custom-checkbox">
+                <input id="checkbox-login" type="checkbox" class="custom-control-input" checked>
+                <label class="custom-control-label" for="checkbox-login">Remember me</label>
+              </div>
+            </div>
+
+            <!-- login button -->
+            <div class="form-group mb-0 text-center">
+              <button class="btn btn-primary btn-block" type="submit">
+                Log In
+              </button>
+            </div>
+          </b-form>
+        </div>
+      </div>
+
+      <!-- forgot password & sign up  -->
+      <div class="row mt-3">
+        <div class="col-12 text-center">
+          <p>
+            <nuxt-link to="/auth/forgot-password" class="text-muted ml-1">
+              Forgot your password?
+            </nuxt-link>
+          </p>
+          <p class="text-muted">
+            Don't have an account?
+            <nuxt-link to="/auth/register" class="text-primary font-weight-medium ml-1">
+              Sign Up
+            </nuxt-link>
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-
+  asyncData ({ $auth, redirect }) {
+    if ($auth.loggedIn) {
+      redirect('/')
+    }
+  },
   data () {
     return {
       errors: {},
@@ -128,7 +121,7 @@ export default {
         await this.$auth.loginWith('laravelSanctum', {
           data: this.form
         })
-        await this.$router.replace({ path: '/auth/verify' })
+        await this.$router.replace({ path: '/' })
       } catch (error) {
         if (error.response.status === 422) {
           this.errors = error.response.data.errors

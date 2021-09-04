@@ -1,0 +1,171 @@
+<template>
+  <div>
+    <div class="row">
+      <div class="col-12">
+        <div class="row mb-2">
+          <div class="col-sm-12">
+            <div class="float-sm-right">
+              <nuxt-link class="btn btn-danger mb-2" to="/admin/add-jobtype/add">
+                <i class="mdi mdi-plus-circle mr-1" /> Add Products
+              </nuxt-link>
+            </div>
+          </div><!-- end col-->
+        </div>
+        <div class="row mb-2">
+          <div class="col-sm-12 col-md-6">
+            <div id="tickets-table_length" class="dataTables_length">
+              <label class="d-inline-flex align-items-center">
+                Display&nbsp;
+                <b-form-select v-model="perPage" size="sm" :options="pageOptions" />&nbsp;customers
+              </label>
+            </div>
+          </div>
+          <!-- Search -->
+          <div class="col-sm-12 col-md-6">
+            <div id="tickets-table_filter" class="dataTables_filter ">
+              <label class="d-inline-flex align-items-center">
+                Search:
+                <b-form-input
+                  v-model="filter"
+                  class="form-control form-control-sm ml-2"
+                  placeholder="Search..."
+                  type="search"
+                />
+              </label>
+            </div>
+          </div>
+          <!-- End search -->
+        </div>
+        {{ beta }}
+        <!-- Table -->
+        <div class="table-responsive mb-0">
+          <b-table
+            :current-page="beta.current_page"
+            :fields="fields"
+            :filter="filter"
+            :filter-included-fields="filterOn"
+            :items="jobytpes"
+            :per-page="beta.per_page"
+            :sort-by.sync="sortBy"
+            :sort-desc.sync="sortDesc"
+            class="card"
+            responsive="sm"
+            table-class="table table-centered w-100"
+            thead-tr-class="bg-light"
+            @filtered="onFiltered"
+          >
+            <template #cell(id)="data">
+              <p class="m-0 d-inline-block align-middle">
+                {{ data.item.id }}
+              </p>
+            </template>
+            <template #cell(name)="data">
+              <p class="m-0 d-inline-block align-middle">
+                {{ data.item.name }}
+              </p>
+            </template>
+            <template #cell(action)>
+              <ul class="list-inline table-action m-0">
+                <li class="list-inline-item">
+                  <button class="bg-success">
+                    View
+                  </button>
+                </li>
+                <li class="list-inline-item">
+                  <NuxtLink to="/admin/add-jobtype/update">
+                    Edit
+                  </NuxtLink>
+                </li>
+                <li class="list-inline-item">
+                  <button class="bg-danger" @click="deleteAddJobType(data.item.id)">
+                    delete
+                  </button>
+                </li>
+              </ul>
+            </template>
+          </b-table>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="dataTables_paginate paging_simple_numbers float-right">
+              <ul class="pagination pagination-rounded">
+                <!-- pagination -->
+                <b-pagination v-model="currentPage" :total-rows="beta.total" :per-page="beta.per_page" />
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+
+export default {
+
+  data () {
+    return {
+      jobytpes: {},
+      beta: {},
+      title: 'Products List',
+      items: [],
+      totalRows: 1,
+      currentPage: 1,
+      pageOptions: [3, 5, 10, 100],
+      filter: null,
+      filterOn: [],
+      sortBy: 'age',
+      sortDesc: false,
+      fields: [{
+        key: 'id',
+        lable: 'ID'
+      },
+      {
+        key: 'name',
+        label: 'Name'
+      },
+      'action'
+      ]
+    }
+  },
+  created () {
+    this.getProductList()
+  },
+  methods: {
+    getProductList () {
+      this.$axios.get('api/admin/job_types')
+        .then((response) => {
+          this.jobytpes = (response.data).data
+          this.beta = (response.data).meta
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.log(error)
+        })
+    },
+
+    async deleteAddJobType (id) {
+      try {
+        await this.$axios.get('sanctum/csrf-cookie')
+        await this.$axios.delete('api/admin/job_types/' + id)
+
+        await this.$router.replace({ path: '/admin' })
+      } catch (error) {
+        if (error.response.status === 422) {
+          this.errors = error.response.data.errors
+        }
+      }
+    },
+
+    /**
+     * Search the table data with search input
+     */
+    onFiltered (filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length
+      this.currentPage = 1
+    }
+  }
+}
+</script>

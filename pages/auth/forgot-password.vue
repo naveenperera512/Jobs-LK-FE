@@ -1,28 +1,28 @@
 <template>
-  <div>
-    <b-container
-      fluid
-      class="mt-5"
-    >
-      <b-row>
-        <b-col md="4" />
-        <b-col
-          md="4"
-          class="mt-5"
-        >
-          <div
-            class="mb-2 mt-5 d-flex justify-content-center"
-            width="30pt"
-            height="30pt"
-          >
-            <img
-              src="@/assets/images/logo.png"
-            >
+  <!-- Login form -->
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-8 col-lg-6 col-xl-4 mt-5">
+      <div class="card">
+        <div class="card-body p-4">
+          <div class="text-center w-75 m-auto">
+            <div class="auth-logo">
+              <div class="logo logo-dark text-center">
+                <div class="logo-lg mt-5 ">
+                  <img src="~/assets/images/favicon.png" width="50">
+                </div>
+                <div class="logo-lg mt-4">
+                  <img src="~/assets/images/logo-new.png" width="200">
+                </div>
+              </div>
+            </div>
+            <p class="text-muted mb-4 mt-3">
+              Enter your email address forgot your password.
+            </p>
           </div>
           <b-card>
             <!-- form -->
             <b-form @submit.prevent="sendForgotPasswordEmail">
-              <div class="mb-2">
+              <div class="mb-2 text-center">
                 If you can't remember your password. please provide your email address and we will send you
                 a link which you use to change your password.
               </div>
@@ -60,15 +60,11 @@
                 </b-form-invalid-feedback>
               </b-form-group>
 
-              <!-- button-->
-              <div class="d-flex justify-content-end">
-                <b-button
-                  type="submit"
-                  variant="primary"
-                  class="mt-n2 ml-2"
-                >
+              <!-- login button -->
+              <div class="form-group mb-0 text-center">
+                <button class="btn btn-primary btn-block" type="submit">
                   send reset link
-                </b-button>
+                </button>
               </div>
             </b-form>
           </b-card>
@@ -83,14 +79,19 @@
               <u>Sign in</u>
             </nuxt-link>
           </div>
-        </b-col>
-      </b-row>
-    </b-container>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  asyncData ({ $auth, redirect }) {
+    if ($auth.loggedIn) {
+      redirect('/')
+    }
+  },
   data () {
     return {
       errors: {},
