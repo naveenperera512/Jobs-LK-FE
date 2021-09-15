@@ -3,26 +3,22 @@
  * Auth-layout
  */
 export default {
-  data () {
-    return {
+    data() {
+        return {
 
-    }
-  }
+        }
+    },
 }
 </script>
 
 <template>
-  <div>
-    <div>
-      <div>
-        <Topbar />
-      </div>
-      <div style="min-height: 70vh">
-        <Nuxt />
-      </div>
-      <!-- end container -->
+<div>
+    <div class="account-pages mt-5 mb-5">
+        <div class="container">
+            <Nuxt />
+        </div>
+        <!-- end container -->
     </div>
     <!-- end page -->
-    <Footer />
-  </div>
+</div>
 </template>

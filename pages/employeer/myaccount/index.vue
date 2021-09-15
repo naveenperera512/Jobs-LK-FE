@@ -1,14 +1,9 @@
 <template>
-  <div class="row">
-    <b-col
-      md="2"
-    />
-    <b-col
-      md="8"
-    >
-      <div>
+  <div class="container mt-3">
+    <div class="row">
+        <div class="col-12">
         <div class="card">
-          <div class="card-body pb-1">
+          <div class="card-body">
             <h4 class="header-title mb-3">
               My Profile
             </h4><h4 class="header-title mb-3" />
@@ -22,8 +17,10 @@
                 nav-wrapper-class="col-sm-3"
                 content-class="pt-0"
               >
-                <b-tab title="Vacancy List" title-item-class="mb-2">
-                  <b-card-text>Text</b-card-text>
+                <b-tab title="My Vacancy List">
+                  <b-card-text>
+                    <MyVacancyList />
+                    </b-card-text>
                 </b-tab>
                 <b-tab title="Settings">
                   <b-card-text>
@@ -35,20 +32,17 @@
           </div>
         </div>
       </div>
-    </b-col>
-    <b-col
-      md="2"
-    />
+    </div>
   </div>
 </template>
 <script>
+import MyVacancyList from './myvacancy-list/index'
 import Settings from './settings/index'
 export default {
-
   components: {
+    MyVacancyList,
     Settings
   },
-  layout: 'auth',
   methods: {}
 }
 </script>
